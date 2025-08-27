@@ -2,6 +2,15 @@
 
 一个基于 FastMCP 框架的简单计算器服务，通过 Server-Sent Events (SSE) 方式暴露 HTTP 服务。
 
+## 服务配置
+
+```json
+{
+  "command": "uvx",
+  "args": ["pycalc-sse@latest", "--transport", "sse", "--host", "0.0.0.0", "--port", "18000"]
+}
+```
+
 ## 功能
 
 - 提供安全的算术表达式计算功能
@@ -45,12 +54,3 @@
   - `_eval_node()`: 递归计算 AST 节点
   - `safe_eval()`: 安全的表达式求值函数
   - `calc()`: 作为 MCP 工具暴露的计算函数
-
-## 服务配置
-
-```json
-{
-  "command": "uvx",
-  "args": ["pycalc-sse@latest", "--transport", "sse", "--host", "0.0.0.0", "--port", "18000"]
-}
-```
