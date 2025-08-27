@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pycalc-sse"
+version = "1.0.0"
+description = "一个基于 FastMCP 框架的简单计算器服务，通过 Server-Sent Events (SSE) 方式暴露 HTTP 服务"
+readme = "README.md"
+authors = [{name = "FastMCP"}]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "fastmcp>=2.0.0",
+]
+requires-python = ">=3.6"
+
+[project.urls]
+Homepage = "https://github.com/your-username/pycalc-sse"
+Repository = "https://github.com/your-username/pycalc-sse"
+
+[project.scripts]
+pycalc-sse = "mcp_calc.src.server_sse:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mcp_calc*"]

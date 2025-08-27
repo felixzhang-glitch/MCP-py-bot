@@ -45,3 +45,12 @@
   - `_eval_node()`: 递归计算 AST 节点
   - `safe_eval()`: 安全的表达式求值函数
   - `calc()`: 作为 MCP 工具暴露的计算函数
+
+## 服务配置
+
+```json
+{
+  "command": "uvx",
+  "args": ["pycalc-sse@latest", "--transport", "sse", "--host", "0.0.0.0", "--port", "18000"]
+}
+```

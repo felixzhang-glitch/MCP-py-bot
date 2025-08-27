@@ -3,6 +3,8 @@ from fastmcp import FastMCP
 from typing import Union
 import ast
 import operator as op
+import argparse
+import sys
 
 mcp = FastMCP(name="PyCalc-SSE")
 
@@ -48,7 +50,16 @@ def calc(expr: str) -> Union[int, float]:
     """
     return safe_eval(expr)
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(description="PyCalc-SSE 服务")
+    parser.add_argument("--transport", default="sse", help="传输方式 (sse)")
+    parser.add_argument("--host", default="0.0.0.0", help="主机地址")
+    parser.add_argument("--port", type=int, default=18000, help="端口号")
+    
+    args = parser.parse_args()
+    
     # 以 SSE 方式暴露为 HTTP 服务（默认 /sse 路由）
-    # 可按需改 host/port
-    mcp.run(transport="sse", host="0.0.0.0", port=18000)
+    mcp.run(transport=args.transport, host=args.host, port=args.port)
+
+if __name__ == "__main__":
+    main()
