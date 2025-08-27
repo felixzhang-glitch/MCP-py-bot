@@ -1,6 +1,6 @@
 # PyCalc-SSE
 
-一个基于 FastMCP 框架的简单计算器服务，通过 Server-Sent Events (SSE) 方式暴露 HTTP 服务。
+PyCalc-SSE 是一个基于 FastMCP 框架的简单计算器服务，通过 Server-Sent Events (SSE) 方式暴露 HTTP 服务。该服务提供了一个安全的算术表达式计算功能，支持基本的数学运算符，包括加法、减法、乘法、除法、整除、取模和幂运算。
 
 ## 服务配置
 
