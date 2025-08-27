@@ -6,8 +6,12 @@ PyCalc-SSE 是一个基于 FastMCP 框架的简单计算器服务，通过 Serve
 
 ```json
 {
-  "command": "uvx",
-  "args": ["pycalc-sse@latest", "--transport", "sse", "--host", "0.0.0.0", "--port", "18000"]
+  "mcpServers": [
+    {
+      "command": "uvx",
+      "args": ["pycalc-sse@latest", "--transport", "sse", "--host", "0.0.0.0", "--port", "18000"]
+    }
+  ]
 }
 ```
 
