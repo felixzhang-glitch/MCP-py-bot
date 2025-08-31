@@ -5,11 +5,6 @@ import ast
 import operator as op
 from typing import Union
 
-from fastmcp import FastMCP
-
-
-# Public MCP app instance
-mcp = FastMCP(name="PyCalc-SSE")
 
 # Allowed operators for safe evaluation
 _ALLOWED_BINOPS = {
@@ -55,13 +50,25 @@ def safe_eval(expr: str) -> Union[int, float]:
     return result
 
 
-@mcp.tool
-def calc(expr: str) -> Union[int, float]:
-    """Compute an arithmetic expression (safe subset).
+def build_app():
+    """Create and configure the FastMCP app.
 
-    Example: "789798*6786786/321321"
+    FastMCP is imported lazily so that tests for safe_eval don't require the
+    runtime dependency to be installed.
     """
-    return safe_eval(expr)
+    from fastmcp import FastMCP
+
+    mcp = FastMCP(name="PyCalc-SSE")
+
+    @mcp.tool
+    def calc(expr: str) -> Union[int, float]:
+        """Compute an arithmetic expression (safe subset).
+
+        Example: "789798*6786786/321321"
+        """
+        return safe_eval(expr)
+
+    return mcp
 
 
 def main() -> None:
@@ -71,9 +78,9 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=18000, help="Bind port")
     args = parser.parse_args()
 
-    mcp.run(transport=args.transport, host=args.host, port=args.port)
+    app = build_app()
+    app.run(transport=args.transport, host=args.host, port=args.port)
 
 
 if __name__ == "__main__":
     main()
-

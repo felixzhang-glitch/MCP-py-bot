@@ -12,10 +12,13 @@
 # 推荐使用虚拟环境
 python -m venv .venv && source .venv/bin/activate
 
-# 开发安装（可编辑）
+# 开发安装（可编辑，便于测试与修改）
 pip install -e .
 
-# 以 CLI 方式运行
+# 如果需要运行 CLI（需要 FastMCP 运行时），安装可选依赖：
+pip install -e .[server]
+
+# 以 CLI 方式运行（安装了 [server] 后）
 pycalc-sse --host 0.0.0.0 --port 18000
 
 # 或以模块方式运行

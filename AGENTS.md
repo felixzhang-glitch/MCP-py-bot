@@ -9,6 +9,7 @@
 ## Build, Test, and Development Commands
 - Create env: `python -m venv .venv && source .venv/bin/activate`.
 - Install (editable): `pip install -e .`.
+- Server runtime deps: `pip install -e .[server]` (installs `fastmcp`).
 - Run server (CLI): `pycalc-sse --host 0.0.0.0 --port 18000`.
 - Run module (direct): `python -m pycalc_sse.server`.
 - Package (wheel/sdist): `python -m build` (requires `pip install build`).
