@@ -27,9 +27,9 @@ jobs:
           pip install -e .
           pip install pytest ruff build
 
-      - name: Lint
+      - name: Lint (auto-fix)
         run: |
-          ruff check src tests
+          ruff check --fix src tests
 
       - name: Run tests
         run: |
