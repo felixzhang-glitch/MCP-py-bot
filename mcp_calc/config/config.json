@@ -1,9 +1,0 @@
-{
-  "name": "PyCalc-SSE",
-  "description": "一个基于 FastMCP 框架的简单计算器服务，通过 Server-Sent Events (SSE) 方式暴露 HTTP 服务",
-  "version": "1.0.0",
-  "transport": "sse",
-  "host": "0.0.0.0",
-  "port": 18000,
-  "entry_point": "mcp_calc.src.server_sse:main"
-}

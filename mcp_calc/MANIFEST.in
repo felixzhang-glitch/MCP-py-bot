@@ -1,4 +1,0 @@
-include README.md
-include requirements.txt
-include config/*.json
-recursive-include mcp_calc/src *.py

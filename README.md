@@ -1,58 +1,51 @@
 # PyCalc-SSE
 
-PyCalc-SSE 是一个基于 FastMCP 框架的简单计算器服务，通过 Server-Sent Events (SSE) 方式暴露 HTTP 服务。该服务提供了一个安全的算术表达式计算功能，支持基本的数学运算符，包括加法、减法、乘法、除法、整除、取模和幂运算。
-
-## 服务配置
-
-```json
-{
-  "mcpServers": {
-    "command": "uvx",
-    "args": ["pycalc-sse@latest", "--transport", "sse", "--host", "0.0.0.0", "--port", "18000"]
-  }
-}
-```
+一个基于 FastMCP 的极简计算器服务，通过 SSE 暴露 HTTP 接口。提供安全的算术表达式求值（白名单 AST），功能不变但项目已重构为标准工程布局（src layout）。
 
 ## 功能
+- 支持运算：`+` `-` `*` `/` `//` `%` `**`、括号、以及一元 `+/-`
+- 仅接受数字常量；拒绝变量与任意 Python 语法
+- 通过 SSE 暴露为 HTTP 服务（默认 `/sse`）
 
-- 提供安全的算术表达式计算功能
-- 支持的运算符：
-  - 基本运算：`+`, `-`, `*`, `/`, `//`, `%`, `**`
-  - 括号：`()`
-  - 一元运算符：`+`, `-`
-- 仅接受数字常量，不支持变量或其他 Python 语法
-- 通过 SSE 方式提供 HTTP 服务
+## 安装与运行
+```bash
+# 推荐使用虚拟环境
+python -m venv .venv && source .venv/bin/activate
 
-## 使用方法
+# 开发安装（可编辑）
+pip install -e .
 
-1. 安装依赖：
-   ```bash
-   pip install fastmcp
-   ```
+# 以 CLI 方式运行
+pycalc-sse --host 0.0.0.0 --port 18000
 
-2. 运行服务：
-   ```bash
-   python server_sse.py
-   ```
-   服务将在 `http://0.0.0.0:18000/sse` 上启动
+# 或以模块方式运行
+python -m pycalc_sse.server --host 0.0.0.0 --port 18000
+```
+服务默认在 `http://0.0.0.0:18000/sse` 暴露。
 
-3. 连接服务并调用工具：
-   - 使用支持 SSE 的客户端连接到 `/sse` 端点
-   - 调用 `calc` 工具，传入 `expr` 参数进行计算
-   - 示例表达式：`"789798*6786786/321321"`
+## 客户端使用（示意）
+- 连接到 `/sse` 端点
+- 调用工具 `calc(expr: str)`，例如：`"789798*6786786/321321"`
 
-## 安全特性
-
-- 使用 Python `ast` 模块解析表达式，避免 `eval` 的安全风险
-- 限制只允许特定的二元运算符和一元运算符
-- 只接受数字常量，拒绝其他类型的表达式节点
-- 对不支持的表达式或语法抛出明确的错误
+## 安全性
+- 使用 `ast` 解析并严格限定节点与运算符，避免 `eval` 风险
+- 对非数字常量或不支持的语法抛出明确错误
 
 ## 代码结构
+- `src/pycalc_sse/server.py`: 入口与服务定义
+- `src/pycalc_sse/__init__.py`: 包元数据与导出
+- `pyproject.toml`: 打包与依赖配置（入口：`pycalc-sse`）
 
-- `server_sse.py`: 主服务文件
-  - `_ALLOWED_BINOPS`: 允许的二元运算符映射
-  - `_ALLOWED_UNARYOPS`: 允许的一元运算符映射
-  - `_eval_node()`: 递归计算 AST 节点
-  - `safe_eval()`: 安全的表达式求值函数
-  - `calc()`: 作为 MCP 工具暴露的计算函数
+## 开发
+- 代码风格：PEP8、4 空格缩进、适度类型标注
+- 打包：`python -m build`（需先 `pip install build`）
+
+## 提交前检查（pre-commit）
+```bash
+pip install pre-commit
+pre-commit install
+
+# 手动检查全部文件
+pre-commit run --all-files
+```
+已配置的钩子：Ruff 格式化/检查、pytest（快速回归）。
